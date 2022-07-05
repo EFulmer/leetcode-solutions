@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "leetcode_solutions"
+version = "0.1.0"
+description = ""
+authors = ["Eric Fulmer <2952996+EFulmer@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+ipython = "^8.2.0"
+pandas = "^1.4.2"
+numpy = "^1.22.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
