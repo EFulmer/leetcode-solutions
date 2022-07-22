@@ -10,7 +10,7 @@ class Solution:
                 # nuke next if they do
                 nums.pop(current_index)
             else:
-                # if not, advance both and increment uniques
+                # if not, advance both
                 current_index += 1
                 next_index += 1
         return len(nums)
