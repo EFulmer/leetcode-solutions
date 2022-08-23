@@ -1,5 +1,3 @@
-POWERS_OF_FOUR = {4**x for x in range(0, 16)}  # 4**16 > 2**31 - 1
-
 class Solution:
     def isPowerOfFour(self, n: int) -> bool:
         # We can solve this without logarithms
@@ -31,4 +29,5 @@ class Solution:
         # Out[16]: [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39]
         # even-length binary string, 1 with an odd number of 0's following it
         # so we can check by seeing if n follows that rule
-        return n in POWERS_OF_FOUR
+        binary_representation = bin(n)[2:]  # chop off the "0b"
+        return len(binary_representation) % 2 == 1 and binary_representation[0] == "1" and all(x == "0" for x in binary_representation[1:])
