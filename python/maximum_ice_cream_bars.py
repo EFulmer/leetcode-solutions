@@ -8,7 +8,7 @@ class Solution:
         result = 0
         for i in sorted(costs):
             if i > coins:
-                break
+                return result
             else:
                 result += 1
                 coins -= i
