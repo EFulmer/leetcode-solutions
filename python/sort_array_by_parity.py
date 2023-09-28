@@ -33,3 +33,30 @@ class Solution:
             else:
                 even_section_end += 1
         return nums
+
+
+# List comprehension, not-in-place version:
+class Solution:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        evens = [num for num in nums if num % 2 == 0]
+        odds = [num for num in nums if num % 2 == 1]
+        return evens + odds
+
+# More efficient non-in-place version:
+# adopting the two pointers approach ("even section end" and
+# "odd section start"), but using them for a new array
+class Solution:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        result = [None for _ in nums]
+        # traverse the array, keeping track of where the evens begin
+        # when you find an odd, swap it with the last item and check again
+        even_section_end = 0
+        odd_section_start = len(nums) - 1
+        for i, n in enumerate(nums):
+            if n % 2 == 0:
+                result[even_section_end] = n
+                even_section_end += 1
+            elif n % 2 == 1:
+                result[odd_section_start] = n
+                odd_section_start -= 1
+        return result
