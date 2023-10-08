@@ -10,6 +10,7 @@ ipython = "^8.2.0"
 pandas = "^1.4.2"
 numpy = "^1.22.3"
 ipdb = "^0.13.9"
+rich = "^13.6.0"
 
 [tool.poetry.dev-dependencies]
 
