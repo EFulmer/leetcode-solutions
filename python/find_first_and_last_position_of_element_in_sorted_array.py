@@ -1,3 +1,4 @@
+# Approach one: naive
 def binary_search(xs: List[int], low: int, high: int, needle: int) -> int:
     if high >= low:
         mid = (high + low) // 2
@@ -39,3 +40,63 @@ class Solution:
         while end < n and nums[end] == target:
             end += 1
         return [start+1, end-1]
+
+
+# Approach 2: use two modified binary searches:
+def binary_search_start_of_range(xs: List[int], needle: int) -> int:
+    # This is a modified binary search to find the first occurrence
+    # of `needle` in `xs`.
+    # (`needle` because of the phrase "needle in a haystack")
+    # The difference between this and regular BS is that if we find
+    # the `needle`, we don't immediately terminate. We set that
+    # index-1 to the new upper bound, track the index, and keep
+    # searching.
+    low = 0
+    high = len(xs) - 1
+    index = -1
+    mid = low + (high - low) // 2
+    while low <= high:
+        if xs[mid] > needle:
+            high = mid - 1
+        elif xs[mid] == needle:
+            high = mid - 1
+            index = mid
+        else:
+            low = mid + 1
+        mid = low + (high - low) // 2
+    return index
+
+
+def binary_search_end_of_range(xs: List[int], needle: int) -> int:
+    # This is a modified binary search to find the last occurrence
+    # of `needle` in `xs`.
+    # (`needle` because of the phrase "needle in a haystack")
+    # The difference between this and regular BS is that if we find
+    # the `needle`, we don't immediately terminate. We set that
+    # index+1 to the new LOWER bound, track the index, and keep
+    # searching.
+    low = 0
+    high = len(xs) - 1
+    index = -1
+    mid = low + (high - low) // 2
+    while low <= high:
+        if xs[mid] > needle:
+            high = mid - 1
+        elif xs[mid] == needle:
+            low = mid + 1
+            index = mid
+        else:
+            low = mid + 1
+        mid = low + (high - low) // 2
+    return index
+
+
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        start_idx = binary_search_start_of_range(xs=nums, needle=target)
+        if start_idx == -1:
+            return [-1, -1]
+        else:
+            return [
+                start_idx, binary_search_end_of_range(xs=nums, needle=target)
+            ]
