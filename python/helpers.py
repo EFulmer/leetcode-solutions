@@ -49,3 +49,13 @@ def knapsack(weights: list, values: list, capacity: int):
             else:  # Exclude branch
                 solutions[i+1][w] = solutions[i][w]
     return solutions
+
+
+def shift_one_character_by(char: str, d: int) -> str:
+    """Shift the ASCII lowercase char, `char` by `d` positions in the
+    Latin alphabet.
+    """
+    # NOT `char`'s ASCII value,
+    # but rather its index in `string.ascii_lowercase`.
+    char_number = ord(char) - 97
+    return string.ascii_lowercase[(char_number + d) % 26]
