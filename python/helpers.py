@@ -33,3 +33,19 @@ def list_of_digits(x):
         x = x - (current_digit * 10**(l-1))
         l -= 1
     return result
+
+
+def knapsack(weights: list, values: list, capacity: int):
+    if len(values) != len(weights):
+        raise ValueError("should be one weight and value per item, no more, no less")
+    solutions = [[0 for _ in range(capacity+1)] for _ in range(len(weights)+1)]
+    for i in range(len(weights)):
+        for w in range(capacity+1):
+            if weights[i] <= w:
+                solutions[i+1][w] = max(
+                    solutions[i][w],
+                    solutions[i][w - weights[i]] + values[i],
+                )
+            else:  # Exclude branch
+                solutions[i+1][w] = solutions[i][w]
+    return solutions
