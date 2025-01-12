@@ -53,7 +53,7 @@ class Solution:
                 unpaired_opens_count += 1
                 open_parens_count -= 1
             elif s[i] == ')':
-                final_count -= 1
+                unpaired_opens_count -= 1
 
             # Working from the end of the string back to the start,
             # an unpairable open parenthesis is always a failure.
