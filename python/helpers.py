@@ -2,6 +2,12 @@ from math import log10
 from typing import List
 
 
+class ListNode(object):
+    def __init__(self, val=0, next_=None):
+        self.val = val
+        self.next = next_
+
+
 class TreeNode(object):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
