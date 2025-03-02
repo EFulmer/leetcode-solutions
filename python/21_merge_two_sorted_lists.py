@@ -63,3 +63,57 @@ def copy_remaining_list(
         sorted_list_cur.next = sorted_list_next
         sorted_list_cur = sorted_list_next
         list_pointer = list_pointer.next
+
+
+# Second solution: using a queue (better CPU performance)
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        # Base cases:
+        # 1. Both lists are empty.
+        # 2. list1 is empty.
+        # 3. list2 is empty.
+        # Handling them in order:
+        if not list1 and not list2:
+            return None
+        elif not list1:
+            return list2
+        elif not list2:
+            return list1
+
+        # Otherwise, queue-based approach: append the smallest item to
+        # the head of the queue and advance the pointer to its list.
+        l1_ptr, l2_ptr = list1, list2
+        vals = deque(maxlen=100)
+        if l1_ptr.val < l2_ptr.val:
+            vals.append(l1_ptr.val)
+            l1_ptr = l1_ptr.next
+        else:
+            vals.append(l2_ptr.val)
+            l2_ptr = l2_ptr.next
+
+        while l1_ptr is not None and l2_ptr is not None:
+            if l1_ptr.val < l2_ptr.val:
+                vals.append(l1_ptr.val)
+                l1_ptr = l1_ptr.next
+            else:
+                vals.append(l2_ptr.val)
+                l2_ptr = l2_ptr.next
+
+        remaining_ptr = l1_ptr if l2_ptr is None else l2_ptr
+
+        while remaining_ptr is not None:
+            vals.append(remaining_ptr.val)
+            remaining_ptr = remaining_ptr.next
+
+        head = ListNode(val=vals.popleft())
+        sorted_next = head.next = ListNode(val=vals.popleft())
+
+        while len(vals) > 0:
+            sorted_next.next = ListNode(val=vals.popleft())
+            sorted_next = sorted_next.next
+        return head

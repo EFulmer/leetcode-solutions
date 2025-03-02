@@ -1,4 +1,5 @@
-from math import log10
+from collections import deque
+from math import log10, trunc
 from typing import List
 
 
@@ -65,3 +66,37 @@ def shift_one_character_by(char: str, d: int) -> str:
     # but rather its index in `string.ascii_lowercase`.
     char_number = ord(char) - 97
     return string.ascii_lowercase[(char_number + d) % 26]
+
+
+def edges_to_adjacency_list(edges: list[list[int]]) -> dict[int, list[int]]:
+    """Convert a list of pairs (edges) to an adjacency list
+    representation of a graph.
+    """
+    # TODO add directed option
+    adjacency_list = dict()
+    for (v1, v2) in edges:
+        if v1 not in adjacency_list.keys():
+            adjacency_list[v1] = [v2]
+        else:
+            adjacency_list[v1].append(v2)
+        if v2 not in adjacency_list.keys():
+            adjacency_list[v2] = [v1]
+        else:
+            adjacency_list[v2].append(v1)
+    return adjacency_list
+
+
+def dfs_adjacency_list(adjacency_list):
+    """Reference implementation for DFS through adjacency lists."""
+    queue = deque()
+    seen = set()
+    queue.append(0)
+    while len(queue) > 0:
+        current = queue.popleft()
+        seen.add(current)
+        print(f"{current = }")
+        for neighbor in adjacency_list[current]:
+            if neighbor not in seen:
+                queue.append(neighbor)
+    return
+
