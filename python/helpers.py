@@ -100,3 +100,46 @@ def dfs_adjacency_list(adjacency_list):
                 queue.append(neighbor)
     return
 
+
+def backtracking_helper(data, success_pred, failure_pred, partial_solution):
+    # If the current partial solution satisfies the criteria, it is no
+    # longer a "partial" solution. Yield it.
+    if success_pred(partial_solution):
+        yield partial_solution
+    # If it satisfies the failure predicate, then it's not a solution at
+    # all. Stop generation.
+    elif failure_pred(partial_solution):
+        return
+
+    # Otherwise, we take the remaining data/input, check if the current
+    # solution in flight can form a solution in combination with the
+    # first item off of aforementioned remaining data, see if we can use
+    # that + the rest of the remaining state to create a solution, and
+    # then see if we can form a solution without using that first item
+    # of the remaining data.
+    for index, item in enumerate(data):
+        # Try with the first item in the remaining data.
+        partial_solution.append(item)
+        yield from backtracking_helper(
+            data=data[i:],
+            success_pred=success_pred,
+            failure_pred=failure_pred,
+            partial_solution=partial_solution,
+        )
+        # Then check for solutions that don't use it.
+        partial_solution.pop()
+
+
+def combination_sum(candidates: int, target: int):
+    # TODO: future improvements: remove repeated copying of input data,
+    # default value for partial_solution,
+    # handle other sorts of input collections aside that which we
+    # can index like a list.
+    success_pred = lambda x: sum(x) == target
+    failure_pred = lambda x: sum(x) > target
+    yield from backtracking_helper(
+        data=candidates,
+        success_pred=success_pred,
+        failure_pred=failure_pred,
+        partial_solution=[],
+    )
