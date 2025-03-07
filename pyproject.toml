@@ -6,7 +6,7 @@ authors = ["Eric Fulmer <2952996+EFulmer@users.noreply.github.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-ipython = "^8.2.0"
+ipython = "^9.0.0"
 pandas = "^1.4.2"
 numpy = "^1.22.3"
 ipdb = "^0.13.9"
