@@ -1,12 +1,22 @@
 from collections import deque
 from math import log10, trunc
-from typing import List
+from typing import List, Optional
 
 
 class ListNode(object):
     def __init__(self, val=0, next_=None):
         self.val = val
         self.next = next_
+
+
+def list_to_ll(l: List) -> Optional[ListNode]:
+    # empty pointer for simplicity
+    result = ListNode()
+    cur = result
+    for item in l:
+        cur.next = ListNode(item)
+        cur = cur.next
+    return result.next
 
 
 class TreeNode(object):
